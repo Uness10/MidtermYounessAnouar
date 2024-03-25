@@ -1,0 +1,149 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 1</title>
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10%;
+            box-sizing: border-box;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            color: rgb(96, 5, 5);
+            border-radius: 4px;
+            cursor: pointer;
+            width: 90px;
+            height: 30px;
+            text-align: center;
+            font-size: medium;
+        }
+
+
+
+        span {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form id="info">
+            <div id="iden">
+                <label > Identifiant : </label>
+                <input placeholder="plus de 12 carateres" type="text" id="idIn" required>
+            </div>
+            <div id="prenom">
+                <label >Prenom : </label>
+                <input type="text" id="prenomIn" required>
+            </div>
+            <div id="nom">
+                <label >Nom : </label>
+                <input type="text" id="nomIn" required> 
+            </div>
+
+            <div id="age">
+                <label >Age : </label>
+                <input placeholder="18,19,20,.." type="number" id="ageIn" required>
+            </div>
+
+            <div id="psswd">
+                <label >Mot de passe : </label>
+                <input type="text" id="pssIn" required>
+            </div>
+
+            <div id="confirm">
+                <label >Resaisir le mot de passe : </label>
+                <input type="text" id="coIn" required>
+            </div>
+            <div id="CGU">
+                <label >J'accepte les CGU:</label>
+                <input type="checkbox" id="cguIn" required>
+            </div>
+            <button type="submit"  id="sub" disabled >submit</button>
+
+        </form>
+    </div>
+    <script>
+        
+        document.getElementById("info").addEventListener("input",function(event) {
+           console.log(validate());
+
+        });
+
+        function validate(){
+            let age = parseInt(document.getElementById("ageIn").value );
+            let iden = document.getElementById("idIn").value ;
+            if(iden.length<12){
+                document.getElementById("sub").disabled = true ;
+                return -1 ;
+
+            }
+            else    {
+                for(let i=0;i<iden.length;i++){
+                    if(!isNaN(iden[i])){
+                        document.getElementById("sub").disabled = true ;
+                        return -1 ;
+    
+                    }
+                }
+            }
+
+            if(age<18){
+                document.getElementById("sub").disabled = true ;
+                return -1 ;
+           
+            }
+            let pss = document.getElementById("pssIn").value ;
+
+            if(pss.length<8)
+            {
+                document.getElementById("sub").disabled = true ;
+                return -1 ;
+           
+            }
+            let cpss = document.getElementById("coIn").value;
+            if(pss!== cpss)
+            {
+                document.getElementById("sub").disabled = true ;
+                return -1 ;
+           
+            }
+            let acc = document.getElementById("cguIn").checked ;
+            if(!acc)
+            {
+                document.getElementById("sub").disabled = true ;
+                return -1 ;
+            }
+            document.getElementById("sub").disabled=false ; 
+            return 1;
+
+        }   
+
+    </script>
+</body>
+</html>
