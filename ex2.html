@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 2</title>
+    <style>
+        .info{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    
+    <span>Gestionnaire taches hebdomadaires </span>
+    <span id="clock"></span>
+    <div id="tasks">
+        
+    </div>
+    <button  onclick="add()" >+</button>
+
+    <script>
+ 
+        date = new Date();
+        document.getElementById("clock").textContent = date.getHours()+':'+date.getMinutes();
+        console.log(date);
+        document.getElementById("clock").addEventListener("change",function(event) {
+                frms =document.querySelector("form") ;
+                if(frms){
+                    frms.forEach(task => {
+                        console.log(task);
+                        if(task.ToDo && task.Hour===date.getHours() && task.Minutes===date.getMinutes() )
+                            alert(task.notes);
+                    });
+                }
+            })
+
+        
+        function validate(i){
+            let todo = document.getElementById(`checkIn${i}`).checked ;
+            let hour = parseInt(document.getElementById(`hourIn${i}`).value) ;
+            let minu = parseInt(document.getElementById(`minIn${i}`).value) ;
+
+            if(hour>23|| hour<0) {
+                document.getElementById(`hourIn${i}`).value ="" ;
+                return -1 ;
+            }
+            if(minu<0 || minu>59){
+                document.getElementById(`minIn${i}`).value ="" ;
+                return -1; 
+            }
+            let notes = document.getElementById(`noteIn${i}`).value;
+            if(!notes) return -1 ;
+            let task ={ToDo:todo,Hour:hour,Minutes:minu,note:notes};
+            
+        }
+
+        function add(){
+            let frm = document.createElement("form") ; 
+            frm.class="info" ; 
+            let i ;
+            if(!document.querySelector("form")) 
+                i = 0;
+            else 
+                i = document.querySelector("form").length-1 ;
+            frm.addEventListener("submit",function(event) {
+                    event.preventDefault();
+                    frm.remove();
+                });  
+            frm.innerHTML= `
+                    <div id="check${i}">
+                        <input  type="checkbox" id="checkIn${i}">
+                    </div>
+                    <div id="hour${i}">
+                        <input type="number" id="hourIn${i}" required >
+                    </div>
+                    
+                    <div id="min${i}">
+                        <input type="number" id="minIn${i}" required > 
+                    </div>
+
+                    <div id="note${i}">
+                        <input  type="text" id="noteIn${i}" required" >
+                    </div>
+                    <button type="submit"  >-</button>
+                `
+            document.getElementById("tasks").appendChild(frm);
+            frm.addEventListener("input",function(event) {
+                    validate(i);
+                });  
+
+        }
+
+        
+        
+    </script>
+</body>
+</html>
